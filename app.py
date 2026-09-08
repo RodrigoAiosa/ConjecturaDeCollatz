@@ -12,6 +12,7 @@ Regra da conjectura:
 """
 
 import streamlit as st
+import streamlit.components.v1 as components
 import pandas as pd
 import plotly.graph_objects as go
 from pathlib import Path
@@ -72,6 +73,118 @@ def classificar_passo(valor_atual: int, valor_anterior: int) -> str:
     if valor_anterior % 2 == 0:
         return "Par (÷ 2)"
     return "Ímpar (× 3 + 1)"
+
+
+def renderizar_metricas_giz(passos: int, maximo: int, pares: int, impares: int) -> None:
+    """
+    Renderiza 4 cartões de métrica com uma animação de 'escrita a giz':
+    cada caractere do número aparece um de cada vez, com leve tremor e
+    desfoque inicial, como se estivesse sendo escrito à mão no quadro.
+    """
+    cartoes = [
+        ("Total de passos", str(passos), "#F2D66B"),
+        ("Maior valor atingido", f"{maximo:,}".replace(",", "."), "#E8917B"),
+        ("Passos pares", str(pares), "#F1EFE7"),
+        ("Passos ímpares", str(impares), "#F2D66B"),
+    ]
+
+    cartoes_html = ""
+    scripts_js = ""
+    for i, (rotulo, valor, cor) in enumerate(cartoes):
+        card_id = f"giz-valor-{i}"
+        rotacao = -1.2 if i % 2 == 0 else 1.2
+        cartoes_html += f"""
+        <div class="giz-card" style="transform: rotate({rotacao}deg);">
+            <div class="giz-rotulo">{rotulo}</div>
+            <div class="giz-valor" id="{card_id}" style="color:{cor};"></div>
+        </div>
+        """
+        scripts_js += f'escreverComGiz("{card_id}", "{valor}", {110 + i * 40}, {i * 220});\n'
+
+    html = f"""
+    <html>
+    <head>
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@700&family=Patrick+Hand&display=swap" rel="stylesheet">
+    <style>
+        html, body {{
+            margin: 0;
+            padding: 0;
+            background: transparent;
+            overflow: visible;
+        }}
+        .giz-container {{
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            justify-content: space-between;
+            font-family: 'Patrick Hand', cursive;
+        }}
+        .giz-card {{
+            flex: 1 1 21%;
+            min-width: 130px;
+            background-color: rgba(241, 239, 231, 0.04);
+            border: 2px dashed rgba(242, 214, 106, 0.55);
+            border-radius: 10px;
+            padding: 14px 8px;
+            text-align: center;
+            box-sizing: border-box;
+        }}
+        .giz-rotulo {{
+            font-family: 'Kalam', cursive;
+            font-weight: 700;
+            color: #E8917B;
+            font-size: 0.95rem;
+            margin-bottom: 6px;
+        }}
+        .giz-valor {{
+            font-family: 'Kalam', cursive;
+            font-weight: 700;
+            font-size: 1.9rem;
+            min-height: 2.2rem;
+            letter-spacing: 1px;
+        }}
+        .giz-char {{
+            display: inline-block;
+            opacity: 0;
+            filter: blur(3px);
+            transition: opacity 0.18s ease-out, filter 0.18s ease-out, transform 0.18s ease-out;
+        }}
+    </style>
+    </head>
+    <body>
+        <div class="giz-container">
+            {cartoes_html}
+        </div>
+        <script>
+        function escreverComGiz(elId, texto, velocidade, atraso) {{
+            const el = document.getElementById(elId);
+            let i = 0;
+            function escreverProximo() {{
+                if (i < texto.length) {{
+                    const span = document.createElement("span");
+                    span.className = "giz-char";
+                    span.textContent = texto[i];
+                    const angulo = (Math.random() * 10 - 5).toFixed(1);
+                    const desloc = (Math.random() * 3 - 1.5).toFixed(1);
+                    span.style.transform = "rotate(" + angulo + "deg) translateY(" + desloc + "px)";
+                    el.appendChild(span);
+                    requestAnimationFrame(function() {{
+                        span.style.opacity = "1";
+                        span.style.filter = "blur(0px)";
+                    }});
+                    i++;
+                    setTimeout(escreverProximo, velocidade);
+                }}
+            }}
+            setTimeout(escreverProximo, atraso);
+        }}
+        {scripts_js}
+        </script>
+    </body>
+    </html>
+    """
+
+    components.html(html, height=140)
 
 
 # ----------------------------------------------------------------------
@@ -143,11 +256,7 @@ if calcular or "sequencia" in st.session_state:
 
     st.subheader(f"Resultados para o número **{numero_inicial}**")
 
-    col1, col2, col3, col4 = st.columns(4)
-    col1.metric("Total de passos", total_passos)
-    col2.metric("Maior valor atingido", f"{valor_maximo:,}".replace(",", "."))
-    col3.metric("Passos pares", qtd_pares)
-    col4.metric("Passos ímpares", qtd_impares)
+    renderizar_metricas_giz(total_passos, valor_maximo, qtd_pares, qtd_impares)
 
     st.divider()
 

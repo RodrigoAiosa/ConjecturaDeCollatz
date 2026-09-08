@@ -99,16 +99,16 @@ st.divider()
 # Entrada do usuário
 # ----------------------------------------------------------------------
 with st.sidebar:
-    st.header("⚙️ Configurações")
+    st.header("🖍️ Sua vez no quadro")
     numero_usuario = st.number_input(
-        "Digite um número inteiro positivo:",
+        "Escreva um número inteiro positivo:",
         min_value=1,
         max_value=1_000_000_000,
         value=27,
         step=1,
         help="Escolha um número inteiro maior que zero para calcular a sequência de Collatz.",
     )
-    calcular = st.button("🚀 Calcular sequência", use_container_width=True)
+    calcular = st.button("✏️ Resolver no quadro", use_container_width=True)
 
     st.markdown("---")
     st.markdown(
@@ -160,8 +160,8 @@ if calcular or "sequencia" in st.session_state:
             x=list(range(len(sequencia))),
             y=sequencia,
             mode="lines+markers",
-            line=dict(color="#7C3AED", width=2),
-            marker=dict(size=5, color="#A78BFA"),
+            line=dict(color="#F1EFE7", width=2, dash="dot"),
+            marker=dict(size=5, color="#F1EFE7"),
             name="Valor",
         )
     )
@@ -170,9 +170,10 @@ if calcular or "sequencia" in st.session_state:
             x=[passo_do_maximo],
             y=[valor_maximo],
             mode="markers+text",
-            marker=dict(size=12, color="#F97316", symbol="star"),
+            marker=dict(size=13, color="#E8917B", symbol="star"),
             text=["Pico"],
             textposition="top center",
+            textfont=dict(color="#E8917B", family="Kalam, cursive", size=14),
             name="Valor máximo",
         )
     )
@@ -180,6 +181,11 @@ if calcular or "sequencia" in st.session_state:
         xaxis_title="Passo",
         yaxis_title="Valor",
         template="plotly_dark",
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+        font=dict(family="Patrick Hand, cursive", color="#F1EFE7", size=14),
+        xaxis=dict(gridcolor="rgba(241,239,231,0.15)", zerolinecolor="rgba(241,239,231,0.2)"),
+        yaxis=dict(gridcolor="rgba(241,239,231,0.15)", zerolinecolor="rgba(241,239,231,0.2)"),
         height=450,
         margin=dict(l=10, r=10, t=30, b=10),
     )
@@ -193,8 +199,8 @@ if calcular or "sequencia" in st.session_state:
                 x=list(range(len(sequencia))),
                 y=sequencia,
                 mode="lines+markers",
-                line=dict(color="#10B981", width=2),
-                marker=dict(size=4),
+                line=dict(color="#F2D66B", width=2, dash="dot"),
+                marker=dict(size=4, color="#F2D66B"),
             )
         )
         fig_log.update_layout(
@@ -202,6 +208,11 @@ if calcular or "sequencia" in st.session_state:
             yaxis_title="Valor (log)",
             yaxis_type="log",
             template="plotly_dark",
+            paper_bgcolor="rgba(0,0,0,0)",
+            plot_bgcolor="rgba(0,0,0,0)",
+            font=dict(family="Patrick Hand, cursive", color="#F1EFE7", size=14),
+            xaxis=dict(gridcolor="rgba(241,239,231,0.15)"),
+            yaxis=dict(gridcolor="rgba(241,239,231,0.15)"),
             height=400,
             margin=dict(l=10, r=10, t=30, b=10),
         )
@@ -214,12 +225,17 @@ if calcular or "sequencia" in st.session_state:
             go.Bar(
                 x=["Pares", "Ímpares"],
                 y=[qtd_pares, qtd_impares],
-                marker_color=["#3B82F6", "#EF4444"],
+                marker_color=["#F1EFE7", "#E8917B"],
             )
         ]
     )
     fig_barras.update_layout(
         template="plotly_dark",
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+        font=dict(family="Patrick Hand, cursive", color="#F1EFE7", size=14),
+        xaxis=dict(gridcolor="rgba(241,239,231,0.1)"),
+        yaxis=dict(gridcolor="rgba(241,239,231,0.15)"),
         height=350,
         margin=dict(l=10, r=10, t=30, b=10),
         yaxis_title="Quantidade",

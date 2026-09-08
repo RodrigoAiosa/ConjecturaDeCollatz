@@ -1,74 +1,212 @@
 /* =========================================================
    Estilos customizados - Conjectura de Collatz
+   Tema: Lousa de sala de aula (quadro-negro + giz + madeira)
    ========================================================= */
 
-/* Fonte e cor geral do texto */
+@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Patrick+Hand&display=swap');
+
+:root {
+    --quadro-verde: #1E3A2E;
+    --quadro-verde-escuro: #142A20;
+    --giz-branco: #F1EFE7;
+    --giz-amarelo: #F2D66B;
+    --giz-rosa: #E8917B;
+    --madeira-clara: #8A5A34;
+    --madeira-escura: #5C371C;
+}
+
+/* ---------------------------------------------------------
+   Fundo geral do app: quadro-negro com leve textura de giz
+   --------------------------------------------------------- */
 html, body, [class*="css"] {
-    font-family: 'Segoe UI', 'Trebuchet MS', sans-serif;
+    font-family: 'Patrick Hand', cursive;
 }
 
-/* Título principal */
+.stApp {
+    background-color: var(--quadro-verde);
+    background-image:
+        radial-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+        radial-gradient(rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 3px 3px, 5px 5px;
+    background-position: 0 0, 2px 2px;
+    color: var(--giz-branco);
+}
+
+/* ---------------------------------------------------------
+   Moldura de madeira ao redor do conteúdo principal
+   --------------------------------------------------------- */
+[data-testid="stAppViewContainer"] > .main .block-container {
+    background-color: var(--quadro-verde);
+    border: 16px solid;
+    border-image: repeating-linear-gradient(
+        100deg,
+        var(--madeira-escura) 0px,
+        var(--madeira-clara) 12px,
+        var(--madeira-escura) 24px,
+        var(--madeira-clara) 36px
+    ) 20;
+    border-radius: 4px;
+    padding: 2.5rem 2.5rem 1.5rem 2.5rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.45), inset 0 0 60px rgba(0,0,0,0.25);
+}
+
+/* Barra lateral também vira "cantinho do quadro" */
+[data-testid="stSidebar"] {
+    background-color: var(--quadro-verde-escuro);
+    border-right: 10px solid;
+    border-image: repeating-linear-gradient(
+        100deg,
+        var(--madeira-escura) 0px,
+        var(--madeira-clara) 10px,
+        var(--madeira-escura) 20px
+    ) 20;
+}
+
+[data-testid="stSidebar"] * {
+    color: var(--giz-branco) !important;
+}
+
+/* ---------------------------------------------------------
+   Títulos - efeito giz escrito à mão
+   --------------------------------------------------------- */
 h1 {
-    background: linear-gradient(90deg, #7C3AED, #A78BFA);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-weight: 800;
+    font-family: 'Kalam', cursive;
+    font-weight: 700;
+    color: var(--giz-amarelo) !important;
+    text-shadow: 0 0 2px rgba(242, 214, 106, 0.4), 1px 1px 0 rgba(0,0,0,0.3);
+    -webkit-text-fill-color: unset;
+    background: none;
+    letter-spacing: 0.5px;
+    transform: rotate(-0.4deg);
 }
 
-/* Cards de métricas */
+h2, h3, h4 {
+    font-family: 'Kalam', cursive;
+    color: var(--giz-branco) !important;
+    text-shadow: 0 0 1.5px rgba(241, 239, 231, 0.35);
+}
+
+p, span, label, .stMarkdown, li {
+    color: var(--giz-branco) !important;
+    font-size: 1.05rem;
+}
+
+/* ---------------------------------------------------------
+   Divisórias - traço de giz tracejado (em vez de linha reta)
+   --------------------------------------------------------- */
+hr, [data-testid="stDivider"] {
+    border: none !important;
+    border-top: 2px dashed rgba(241, 239, 231, 0.4) !important;
+    margin: 1.4rem 0 !important;
+}
+
+/* ---------------------------------------------------------
+   Métricas - como quadradinhos de giz desenhados à mão
+   --------------------------------------------------------- */
 div[data-testid="stMetric"] {
-    background-color: rgba(124, 58, 237, 0.08);
-    border: 1px solid rgba(124, 58, 237, 0.25);
-    border-radius: 12px;
-    padding: 12px 8px;
+    background-color: rgba(241, 239, 231, 0.04);
+    border: 2px dashed rgba(242, 214, 106, 0.55);
+    border-radius: 10px;
+    padding: 14px 8px;
     text-align: center;
+    transform: rotate(-0.3deg);
+}
+
+div[data-testid="stMetric"]:nth-child(2n) {
+    transform: rotate(0.4deg);
 }
 
 div[data-testid="stMetricLabel"] {
-    font-weight: 600;
-    opacity: 0.8;
+    font-family: 'Kalam', cursive;
+    font-weight: 700 !important;
+    color: var(--giz-rosa) !important;
+    opacity: 1 !important;
 }
 
 div[data-testid="stMetricValue"] {
-    color: #A78BFA;
-    font-weight: 700;
+    font-family: 'Kalam', cursive;
+    color: var(--giz-amarelo) !important;
+    font-weight: 700 !important;
+    text-shadow: 0 0 2px rgba(242, 214, 106, 0.35);
 }
 
-/* Botão principal */
+/* ---------------------------------------------------------
+   Botão principal - "giz" que reage ao clique
+   --------------------------------------------------------- */
 .stButton > button {
-    background: linear-gradient(90deg, #7C3AED, #6D28D9);
-    color: white;
-    border: none;
+    background-color: transparent;
+    color: var(--giz-amarelo);
+    border: 2.5px dashed var(--giz-amarelo);
     border-radius: 10px;
-    font-weight: 600;
+    font-family: 'Kalam', cursive;
+    font-weight: 700;
+    font-size: 1.05rem;
     padding: 0.6em 1em;
-    transition: transform 0.15s ease-in-out;
+    transform: rotate(-0.5deg);
+    transition: transform 0.15s ease-in-out, background-color 0.15s ease-in-out;
 }
 
 .stButton > button:hover {
-    transform: scale(1.02);
-    filter: brightness(1.1);
+    background-color: rgba(242, 214, 106, 0.12);
+    color: var(--giz-amarelo);
+    border-color: var(--giz-amarelo);
+    transform: rotate(0deg) scale(1.02);
 }
 
-/* Expander */
+/* Inputs numéricos */
+[data-testid="stNumberInput"] input {
+    font-family: 'Kalam', cursive;
+    background-color: rgba(241, 239, 231, 0.06);
+    color: var(--giz-branco) !important;
+    border: 2px dashed rgba(241, 239, 231, 0.4) !important;
+    border-radius: 8px;
+}
+
+/* ---------------------------------------------------------
+   Expander - como um apagador de lousa aberto
+   --------------------------------------------------------- */
 details {
-    border: 1px solid rgba(124, 58, 237, 0.25);
+    border: 2px dashed rgba(241, 239, 231, 0.35);
     border-radius: 10px;
-    padding: 4px 8px;
+    padding: 4px 10px;
+    background-color: rgba(0,0,0,0.1);
 }
 
-/* Tabela */
+summary {
+    font-family: 'Kalam', cursive;
+    color: var(--giz-branco) !important;
+}
+
+/* ---------------------------------------------------------
+   Tabela / DataFrame - "caderno" sobre a lousa
+   --------------------------------------------------------- */
 div[data-testid="stDataFrame"] {
-    border: 1px solid rgba(124, 58, 237, 0.2);
-    border-radius: 10px;
+    border: 2px dashed rgba(241, 239, 231, 0.35);
+    border-radius: 8px;
+    background-color: rgba(241, 239, 231, 0.03);
 }
 
-/* Rodapé */
+/* ---------------------------------------------------------
+   Caixas de alerta / info - recadinho no cantinho do quadro
+   --------------------------------------------------------- */
+div[data-testid="stAlert"] {
+    background-color: rgba(242, 214, 106, 0.08);
+    border: 2px dashed var(--giz-amarelo);
+    border-radius: 10px;
+    color: var(--giz-branco) !important;
+    font-family: 'Patrick Hand', cursive;
+}
+
+/* ---------------------------------------------------------
+   Rodapé - assinatura no canto do quadro
+   --------------------------------------------------------- */
 .rodape {
     text-align: center;
     margin-top: 40px;
     padding: 16px;
-    font-size: 0.85em;
-    opacity: 0.6;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-family: 'Kalam', cursive;
+    font-size: 1rem;
+    color: var(--giz-rosa) !important;
+    opacity: 0.85;
+    border-top: 2px dashed rgba(241, 239, 231, 0.3);
 }

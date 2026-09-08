@@ -92,9 +92,8 @@ def renderizar_metricas_giz(passos: int, maximo: int, pares: int, impares: int) 
     scripts_js = ""
     for i, (rotulo, valor, cor) in enumerate(cartoes):
         card_id = f"giz-valor-{i}"
-        rotacao = -1.2 if i % 2 == 0 else 1.2
         cartoes_html += f"""
-        <div class="giz-card" style="transform: rotate({rotacao}deg);">
+        <div class="giz-card">
             <div class="giz-rotulo">{rotulo}</div>
             <div class="giz-valor" id="{card_id}" style="color:{cor};"></div>
         </div>
@@ -118,6 +117,8 @@ def renderizar_metricas_giz(passos: int, maximo: int, pares: int, impares: int) 
             gap: 14px;
             justify-content: space-between;
             font-family: 'Patrick Hand', cursive;
+            padding: 6px 4px 10px 4px;
+            box-sizing: border-box;
         }}
         .giz-card {{
             flex: 1 1 21%;
@@ -184,7 +185,7 @@ def renderizar_metricas_giz(passos: int, maximo: int, pares: int, impares: int) 
     </html>
     """
 
-    components.html(html, height=140)
+    components.html(html, height=160)
 
 
 # ----------------------------------------------------------------------

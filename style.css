@@ -1,0 +1,74 @@
+/* =========================================================
+   Estilos customizados - Conjectura de Collatz
+   ========================================================= */
+
+/* Fonte e cor geral do texto */
+html, body, [class*="css"] {
+    font-family: 'Segoe UI', 'Trebuchet MS', sans-serif;
+}
+
+/* Título principal */
+h1 {
+    background: linear-gradient(90deg, #7C3AED, #A78BFA);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800;
+}
+
+/* Cards de métricas */
+div[data-testid="stMetric"] {
+    background-color: rgba(124, 58, 237, 0.08);
+    border: 1px solid rgba(124, 58, 237, 0.25);
+    border-radius: 12px;
+    padding: 12px 8px;
+    text-align: center;
+}
+
+div[data-testid="stMetricLabel"] {
+    font-weight: 600;
+    opacity: 0.8;
+}
+
+div[data-testid="stMetricValue"] {
+    color: #A78BFA;
+    font-weight: 700;
+}
+
+/* Botão principal */
+.stButton > button {
+    background: linear-gradient(90deg, #7C3AED, #6D28D9);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    padding: 0.6em 1em;
+    transition: transform 0.15s ease-in-out;
+}
+
+.stButton > button:hover {
+    transform: scale(1.02);
+    filter: brightness(1.1);
+}
+
+/* Expander */
+details {
+    border: 1px solid rgba(124, 58, 237, 0.25);
+    border-radius: 10px;
+    padding: 4px 8px;
+}
+
+/* Tabela */
+div[data-testid="stDataFrame"] {
+    border: 1px solid rgba(124, 58, 237, 0.2);
+    border-radius: 10px;
+}
+
+/* Rodapé */
+.rodape {
+    text-align: center;
+    margin-top: 40px;
+    padding: 16px;
+    font-size: 0.85em;
+    opacity: 0.6;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}

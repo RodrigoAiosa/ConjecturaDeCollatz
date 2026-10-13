@@ -16,6 +16,7 @@ import streamlit.components.v1 as components
 import pandas as pd
 import plotly.graph_objects as go
 from pathlib import Path
+from esconder_selo import esconder_selo_streamlit
 
 
 # ----------------------------------------------------------------------
@@ -27,6 +28,7 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
+esconder_selo_streamlit()  # oculta os controles do Streamlit Cloud
 
 
 # ----------------------------------------------------------------------
